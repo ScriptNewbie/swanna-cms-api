@@ -39,4 +39,27 @@ class NewsController extends Controller
 
         return redirect()->route('news')->with('success', 'News post deleted successfully!');
     }
+
+    public function edit($id)
+    {
+        $news = News::findOrFail($id);
+
+        return Inertia::render('News/Edit', [
+            'news' => $news,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $news = News::findOrFail($id);
+
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required',
+        ]);
+
+        $news->update($validated);
+
+        return redirect()->route('news')->with('success', 'News post updated successfully!');
+    }
 }

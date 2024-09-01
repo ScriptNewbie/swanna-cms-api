@@ -135,7 +135,7 @@ export default function Authenticated({
                             href={route("news")}
                             active={route().current("news")}
                         >
-                            Dashboard
+                            Aktualności
                         </ResponsiveNavLink>
                     </div>
 

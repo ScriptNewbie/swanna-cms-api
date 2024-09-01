@@ -1,5 +1,4 @@
-import React from "react";
-import { useForm } from "@inertiajs/react";
+import { useForm, Link } from "@inertiajs/react";
 
 export interface News {
     id: number;
@@ -29,9 +28,12 @@ export function News({ news }: { news: News }) {
                 </p>
             </div>
             <div className="flex justify-end mt-4">
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded mr-2">
+                <Link
+                    href={`/news/${news.id}`}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded mr-2"
+                >
                     Edytuj
-                </button>
+                </Link>
                 <button
                     onClick={handleDelete}
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded"

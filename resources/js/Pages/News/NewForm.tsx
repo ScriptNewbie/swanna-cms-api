@@ -11,38 +11,62 @@ export function NewForm({ author }: { author: string }) {
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         post("/news", {
-            onSuccess: () => reset(), // Reset the form on success
+            onSuccess: () => reset(),
         });
     };
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label htmlFor="title">Title</label>
-                <input
-                    type="text"
-                    id="title"
-                    value={data.title}
-                    onChange={(e) => setData("title", e.target.value)}
-                />
-                {errors.title && <div>{errors.title}</div>}
-            </div>
+        <div className="p-3">
+            <form onSubmit={handleSubmit}>
+                <div className="mt-2">
+                    <label
+                        htmlFor="title"
+                        className="block text-sm font-medium text-gray-700"
+                    >
+                        Tytuł
+                    </label>
+                    <div>
+                        <input
+                            type="text"
+                            id="title"
+                            value={data.title}
+                            onChange={(e) => setData("title", e.target.value)}
+                            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        />
+                        {errors.title && (
+                            <div className="text-sm text-red-600">
+                                {errors.title}
+                            </div>
+                        )}
+                    </div>
+                </div>
 
-            <div>
-                <label htmlFor="content">Content</label>
-                <textarea
-                    id="content"
-                    value={data.content}
-                    onChange={(e) => setData("content", e.target.value)}
-                />
-                {errors.content && <div>{errors.content}</div>}
-            </div>
+                <div className="mt-2">
+                    <textarea
+                        id="content"
+                        value={data.content}
+                        onChange={(e) => setData("content", e.target.value)}
+                        rows={5}
+                        className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    />
+                    {errors.content && (
+                        <div className="text-sm text-red-600">
+                            {errors.content}
+                        </div>
+                    )}
+                </div>
 
-            <div>
-                <input type="hidden" id="author" value={data.author} />
-                {errors.author && <div>{errors.author}</div>}
-            </div>
+                <div>
+                    <input type="hidden" id="author" value={data.author} />
+                    {errors.author && <div>{errors.author}</div>}
+                </div>
 
-            <button type="submit">Create Post</button>
-        </form>
+                <button
+                    type="submit"
+                    className="mt-2 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                    Opublikuj
+                </button>
+            </form>
+        </div>
     );
 }

@@ -6,14 +6,7 @@ import { NewForm } from "./NewForm";
 
 export default function NewPage({ auth, news }: PageProps & { news: News[] }) {
     return (
-        <AuthenticatedLayout
-            user={auth.user}
-            header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Aktualności
-                </h2>
-            }
-        >
+        <AuthenticatedLayout user={auth.user}>
             <NewForm author={auth.user.name} />
             <div className="p-3 grid grid-cols-4 gap-3">
                 {news.map((news) => (
