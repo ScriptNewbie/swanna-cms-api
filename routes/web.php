@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\FilesController;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
@@ -27,6 +28,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/news/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
     Route::get('/news/{id}', [NewsController::class, 'edit'])->name('news.edit');
     Route::put('/news/{id}', [NewsController::class, 'update'])->name('news.update');
+
+    Route::get('/upload-files', [FilesController::class, 'index'])->name('files');
+    Route::post('/upload-files', [FilesController::class, 'store'])->name('files.upload');
 });
 
 require __DIR__ . '/auth.php';
