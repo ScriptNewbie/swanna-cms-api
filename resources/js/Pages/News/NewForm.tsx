@@ -1,11 +1,11 @@
 import { useForm } from "@inertiajs/react";
 import { FormEvent } from "react";
 
-export function NewForm() {
+export function NewForm({ author }: { author: string }) {
     const { data, setData, post, errors, reset } = useForm({
         title: "",
         content: "",
-        author: "",
+        author,
     });
 
     const handleSubmit = (e: FormEvent) => {
@@ -38,13 +38,7 @@ export function NewForm() {
             </div>
 
             <div>
-                <label htmlFor="author">Author</label>
-                <input
-                    type="text"
-                    id="author"
-                    value={data.author}
-                    onChange={(e) => setData("author", e.target.value)}
-                />
+                <input type="hidden" id="author" value={data.author} />
                 {errors.author && <div>{errors.author}</div>}
             </div>
 

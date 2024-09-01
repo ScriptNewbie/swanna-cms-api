@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/news', [NewsController::class, 'index'])->name('news');
     Route::post('/news', [NewsController::class, 'store'])->name('news.store');
+    Route::delete('/news/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
 });
 
 require __DIR__ . '/auth.php';

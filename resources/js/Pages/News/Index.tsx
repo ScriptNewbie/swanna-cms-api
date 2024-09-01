@@ -14,10 +14,12 @@ export default function NewPage({ auth, news }: PageProps & { news: News[] }) {
                 </h2>
             }
         >
-            <NewForm />
-            {news.map((news) => (
-                <News key={news.id} news={news} />
-            ))}
+            <NewForm author={auth.user.name} />
+            <div className="p-3 grid grid-cols-4 gap-3">
+                {news.map((news) => (
+                    <News key={news.id} news={news} />
+                ))}
+            </div>
         </AuthenticatedLayout>
     );
 }
