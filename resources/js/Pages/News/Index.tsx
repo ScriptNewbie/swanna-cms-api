@@ -4,10 +4,7 @@ import { PageProps } from "@/types";
 import { News } from "./News";
 import { NewForm } from "./NewForm";
 
-export default function Dashboard({
-    auth,
-    news,
-}: PageProps & { news: News[] }) {
+export default function NewPage({ auth, news }: PageProps & { news: News[] }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
