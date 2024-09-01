@@ -10,5 +10,4 @@ class News extends Model
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = ['title', 'publicationDate', 'author', 'content'];
-    protected $hidden = ['author'];
 }

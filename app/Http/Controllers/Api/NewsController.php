@@ -17,7 +17,7 @@ class NewsController extends Controller
 
         $news->transform(function ($item) {
             $item->publicationDate = Carbon::parse($item->publicationDate)->format('d/m/Y');
-            return $item;
+            return $item->makeHidden('author');
         });
 
         return response()->json($news);
