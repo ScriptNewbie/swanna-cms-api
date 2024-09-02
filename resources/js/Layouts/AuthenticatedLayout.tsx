@@ -149,18 +149,30 @@ export default function Authenticated({
                     }
                 >
                     <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink
-                            href={route("news")}
-                            active={route().current("news")}
-                        >
-                            Aktualności
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            href={route("files")}
-                            active={route().current("files")}
-                        >
-                            Pliki
-                        </ResponsiveNavLink>
+                        {!user.admin && (
+                            <ResponsiveNavLink
+                                href={route("dashboard")}
+                                active={route().current("dashboard")}
+                            >
+                                Strona główna
+                            </ResponsiveNavLink>
+                        )}
+                        {!!user.admin && (
+                            <>
+                                <ResponsiveNavLink
+                                    href={route("news")}
+                                    active={route().current("news")}
+                                >
+                                    Aktualności
+                                </ResponsiveNavLink>
+                                <ResponsiveNavLink
+                                    href={route("files")}
+                                    active={route().current("files")}
+                                >
+                                    Pliki
+                                </ResponsiveNavLink>
+                            </>
+                        )}
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
