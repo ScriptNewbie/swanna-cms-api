@@ -27,18 +27,30 @@ export default function Authenticated({
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink
-                                    href={route("news")}
-                                    active={route().current("news")}
-                                >
-                                    Aktualności
-                                </NavLink>
-                                <NavLink
-                                    href={route("files")}
-                                    active={route().current("files")}
-                                >
-                                    Pliki
-                                </NavLink>
+                                {!user.admin && (
+                                    <NavLink
+                                        href={route("dashboard")}
+                                        active={route().current("dashboard")}
+                                    >
+                                        Strona główna
+                                    </NavLink>
+                                )}
+                                {!!user.admin && (
+                                    <>
+                                        <NavLink
+                                            href={route("news")}
+                                            active={route().current("news")}
+                                        >
+                                            Aktualności
+                                        </NavLink>
+                                        <NavLink
+                                            href={route("files")}
+                                            active={route().current("files")}
+                                        >
+                                            Pliki
+                                        </NavLink>
+                                    </>
+                                )}
                             </div>
                         </div>
 
