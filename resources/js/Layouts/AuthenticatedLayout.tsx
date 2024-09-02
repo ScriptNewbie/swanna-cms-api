@@ -33,6 +33,12 @@ export default function Authenticated({
                                 >
                                     Aktualności
                                 </NavLink>
+                                <NavLink
+                                    href={route("files")}
+                                    active={route().current("files")}
+                                >
+                                    Pliki
+                                </NavLink>
                             </div>
                         </div>
 
@@ -136,6 +142,12 @@ export default function Authenticated({
                             active={route().current("news")}
                         >
                             Aktualności
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route("files")}
+                            active={route().current("files")}
+                        >
+                            Pliki
                         </ResponsiveNavLink>
                     </div>
 
