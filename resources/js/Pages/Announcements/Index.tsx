@@ -4,7 +4,7 @@ import { FilePostForm } from "../../Components/FilePostForm";
 import { useForm } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 
-export default function Announcements({ auth }: PageProps) {
+export default function Announcements({ auth, nextAvailable }: PageProps) {
     const { put } = useForm();
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -13,12 +13,26 @@ export default function Announcements({ auth }: PageProps) {
                 <FilePostForm endpointUrl="/announcements" />
                 <h2 className="mt-4">Następny</h2>
                 <FilePostForm endpointUrl="/announcements/next" />
-                <PrimaryButton
-                    className="justify-center items-center"
-                    onClick={() => put("/announcements/next-as-current")}
-                >
-                    Ogłoszenia z następnego tygodnia jako aktualne!
-                </PrimaryButton>
+                {!!nextAvailable && (
+                    <PrimaryButton
+                        className="justify-center items-center"
+                        onClick={() =>
+                            put("/announcements/next-as-current", {
+                                onSuccess: () => {
+                                    alert("Udało się!");
+                                },
+                                onError: (e) => {
+                                    alert(
+                                        Object.values(e)?.[0] ||
+                                            "Coś poszło nie tak!"
+                                    );
+                                },
+                            })
+                        }
+                    >
+                        Ogłoszenia z następnego tygodnia jako aktualne!
+                    </PrimaryButton>
+                )}
             </div>
         </AuthenticatedLayout>
     );

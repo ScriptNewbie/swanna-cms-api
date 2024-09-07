@@ -24,7 +24,7 @@ class AnnouncementsController extends Controller
 
     public function index()
     {
-        return Inertia::render('Announcements/Index');
+        return Inertia::render('Announcements/Index', ["nextAvailable" => file_exists($this->nextFile)]);
     }
 
     public function store(Request $request)
@@ -44,7 +44,7 @@ class AnnouncementsController extends Controller
     public function nextAsCurrent()
     {
         if (!file_exists($this->nextFile)) {
-            return redirect()->back()->with('error', 'Error! next.pdf does not exist!');
+            return redirect()->back()->withErrors(["next" => "Nie ma jeszcze ogłoszeń z następnego tygodnia!"]);
         }
         $this->archiveCurrent();
         rename($this->nextFile, $this->currentFile);
