@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\FilesController;
+use App\Http\Controllers\AnnouncementsController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -41,6 +42,11 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
 
     Route::get('/upload-files', [FilesController::class, 'index'])->name('files');
     Route::post('/upload-files', [FilesController::class, 'store'])->name('files.upload');
+
+    Route::get('/announcements', [AnnouncementsController::class, 'index'])->name('announcements');
+    Route::post('/announcements', [AnnouncementsController::class, 'store'])->name('announcements.upload');
+    Route::post('/announcements/next', [AnnouncementsController::class, 'storeNext'])->name('announcements.upload.next');
+    Route::put('/announcements/next-as-current', [AnnouncementsController::class, 'nextAsCurrent'])->name('announcements.next.current');
 });
 
 require __DIR__ . '/auth.php';
