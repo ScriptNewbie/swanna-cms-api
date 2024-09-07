@@ -16,7 +16,7 @@ class AnnouncementsController extends Controller
 
     public function __construct()
     {
-        $this->uploadDirectory = public_path('../private_html/ogloszenia');
+        $this->uploadDirectory = public_path('../../private_html/ogloszenia');
         $this->historyDirectory = $this->uploadDirectory . '/historia';
         $this->currentFile = $this->uploadDirectory . '/ogloszenia.pdf';
         $this->nextFile = $this->uploadDirectory . '/next.pdf';
@@ -37,7 +37,7 @@ class AnnouncementsController extends Controller
 
     public function storeNext(Request $request)
     {
-        $request->file('file')->move(public_path('../private_html/ogloszenia'), "next.pdf");
+        $request->file('file')->move(public_path('../../private_html/ogloszenia'), "next.pdf");
         return redirect()->back()->with('success', 'File uploaded successfully!');
     }
 

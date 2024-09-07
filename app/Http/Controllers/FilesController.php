@@ -14,7 +14,7 @@ class FilesController extends Controller
 
     public function store(Request $request)
     {
-        $request->file('file')->move(public_path('../private_html/files'), $request->file('file')->getClientOriginalName());
+        $request->file('file')->move(public_path('../../private_html/files'), $request->file('file')->getClientOriginalName());
         return redirect()->back()->with('success', 'File uploaded successfully!');
     }
 }
