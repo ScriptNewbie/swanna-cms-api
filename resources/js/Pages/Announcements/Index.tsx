@@ -1,13 +1,14 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
 import { FilePostForm } from "../../Components/FilePostForm";
-import { useForm } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function Announcements({ auth, nextAvailable }: PageProps) {
     const { put } = useForm();
     return (
         <AuthenticatedLayout user={auth.user}>
+            <Head title="Ogłoszenia" />
             <div className="p-4 gap-2 flex flex-col">
                 <h2>Ten tydzień</h2>
                 <FilePostForm endpointUrl="/announcements" />
