@@ -10,7 +10,7 @@ export default function NewPage({ auth, news }: PageProps & { news: News[] }) {
         <AuthenticatedLayout user={auth.user}>
             <Head title="Aktualności" />
             <NewForm author={auth.user.name} />
-            <div className="p-3 grid grid-cols-4 gap-3">
+            <div className="p-3 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3">
                 {news.map((news) => (
                     <News key={news.id} news={news} />
                 ))}
