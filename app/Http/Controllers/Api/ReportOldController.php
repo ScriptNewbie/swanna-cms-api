@@ -11,6 +11,13 @@ class ReportOldController extends Controller
 {
     public function index()
     {
+        //Limit amount of messages invoked by crawlers
+        $what = request()->query('what');
+        if ($what !== "ogloszenia") {
+            return response('Not found', 404)
+                ->header('Content-Type', 'text/plain');
+        }
+
         $mailRecord = DB::table('mail')->first();
 
         if (!$mailRecord) {
