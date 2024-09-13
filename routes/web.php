@@ -42,6 +42,7 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
 
     Route::get('/upload-files', [FilesController::class, 'index'])->name('files');
     Route::post('/upload-files', [FilesController::class, 'store'])->name('files.upload');
+    Route::delete('/upload-files/{name}', [FilesController::class, 'destroy'])->name('files.delete');
 
     Route::get('/announcements', [AnnouncementsController::class, 'index'])->name('announcements');
     Route::post('/announcements', [AnnouncementsController::class, 'store'])->name('announcements.upload');
