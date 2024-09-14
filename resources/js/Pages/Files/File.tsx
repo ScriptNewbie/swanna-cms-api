@@ -11,7 +11,13 @@ export function File({ file }: { file: string }) {
     return (
         <div className="max-w-sm rounded overflow-hidden shadow-lg p-4 bg-white flex flex-col h-full">
             <div className="flex-grow">
-                <div className="font-bold text-xl mb-2 break-all">{file}</div>
+                <a
+                    href={"/files/" + file}
+                    target="_blank"
+                    className="font-bold text-xl mb-2 break-all"
+                >
+                    {file}
+                </a>
             </div>
             <div className="flex justify-end mt-4">
                 <button
