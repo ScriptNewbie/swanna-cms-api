@@ -4,8 +4,10 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\FilesController;
+use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AnnouncementsController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\SuperAdminMiddleware;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -48,6 +50,14 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::post('/announcements', [AnnouncementsController::class, 'store'])->name('announcements.upload');
     Route::post('/announcements/next', [AnnouncementsController::class, 'storeNext'])->name('announcements.upload.next');
     Route::put('/announcements/next-as-current', [AnnouncementsController::class, 'nextAsCurrent'])->name('announcements.next.current');
+});
+
+Route::middleware(['auth', SuperAdminMiddleware::class])->group(function () {
+    Route::get('/users', [UsersController::class, 'index'])->name('users');
+    Route::delete('/users/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
+    Route::patch('/users/super-admin/{id}', [UsersController::class, 'makeSuperAdmin'])->name('users.makeSuperAdmin');
+    Route::patch('/users/admin/{id}', [UsersController::class, 'makeAdmin'])->name('users.makeAdmin');
+    Route::patch('/users/demote/{id}', [UsersController::class, 'makeUser'])->name('users.demote');
 });
 
 require __DIR__ . '/auth.php';

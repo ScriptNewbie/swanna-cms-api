@@ -59,6 +59,14 @@ export default function Authenticated({
                                         </NavLink>
                                     </>
                                 )}
+                                {user.admin === 10 && (
+                                    <NavLink
+                                        href={route("users")}
+                                        active={route().current("users")}
+                                    >
+                                        Użytkownicy
+                                    </NavLink>
+                                )}
                             </div>
                         </div>
 
@@ -186,6 +194,14 @@ export default function Authenticated({
                                     Pliki
                                 </ResponsiveNavLink>
                             </>
+                        )}
+                        {user.admin === 10 && (
+                            <ResponsiveNavLink
+                                href={route("users")}
+                                active={route().current("users")}
+                            >
+                                Użytkownicy
+                            </ResponsiveNavLink>
                         )}
                     </div>
 
