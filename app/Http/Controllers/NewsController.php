@@ -29,7 +29,7 @@ class NewsController extends Controller
 
         News::create($validated);
 
-        return redirect()->route('news')->with('success', 'News post created successfully!');
+        return redirect()->back()->with('success', 'News post created successfully!');
     }
 
     public function destroy($id)
@@ -37,7 +37,7 @@ class NewsController extends Controller
         $news = News::findOrFail($id);
         $news->delete();
 
-        return redirect()->route('news')->with('success', 'News post deleted successfully!');
+        return redirect()->back()->with('success', 'News post deleted successfully!');
     }
 
     public function edit($id)
@@ -60,6 +60,6 @@ class NewsController extends Controller
 
         $news->update($validated);
 
-        return redirect()->route('news')->with('success', 'News post updated successfully!');
+        return redirect()->back()->with('success', 'News post updated successfully!');
     }
 }

@@ -3,6 +3,7 @@ import { PageProps } from "@/types";
 import { useForm } from "@inertiajs/react";
 import { News } from "./News";
 import { FormEvent } from "react";
+import { MarkdownEditor } from "@/Components/MarkdownEditor";
 
 export default function Edit({ auth, news }: PageProps & { news: News }) {
     const { data, setData, put, errors, reset } = useForm({
@@ -48,12 +49,11 @@ export default function Edit({ auth, news }: PageProps & { news: News }) {
                     </div>
 
                     <div className="mt-2">
-                        <textarea
-                            id="content"
-                            value={data.content}
-                            onChange={(e) => setData("content", e.target.value)}
-                            rows={5}
-                            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        <MarkdownEditor
+                            content={data.content}
+                            setContent={(content: string) =>
+                                setData("content", content)
+                            }
                         />
                         {errors.content && (
                             <div className="text-sm text-red-600">

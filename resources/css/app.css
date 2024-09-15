@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.markdowneditor li {
+    margin-left: 2rem;
+}
+
+.markdowneditor ul li {
+    list-style: disc;
+}
+
+.markdowneditor ol li {
+    list-style: decimal;
+}
