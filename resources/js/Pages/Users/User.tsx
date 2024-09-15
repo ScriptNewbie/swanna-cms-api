@@ -110,7 +110,7 @@ export function User({
 }
 
 const roleMap: Record<string, string> = {
-    "0": "User",
+    "0": "Użytkownik",
     "1": "Admin",
-    "10": "Użytkownik",
+    "10": "Super Admin",
 };
