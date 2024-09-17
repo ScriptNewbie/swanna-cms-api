@@ -4,7 +4,7 @@ export function File({ file }: { file: string }) {
     const { delete: destroy } = useForm();
     const handleDelete = () => {
         if (confirm(`Czy na pewno chesz usunąć plik ${file}?`)) {
-            destroy(`/upload-files/${file}`);
+            destroy(`/upload-files/${file}`, { preserveScroll: true });
         }
     };
 

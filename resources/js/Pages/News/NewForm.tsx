@@ -13,6 +13,7 @@ export function NewForm({ author }: { author: string }) {
         e.preventDefault();
         post("/news", {
             onSuccess: () => reset(),
+            preserveScroll: true,
         });
     };
     return (

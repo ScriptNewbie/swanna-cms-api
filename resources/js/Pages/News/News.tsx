@@ -12,7 +12,7 @@ export function News({ news }: { news: News }) {
     const { delete: destroy } = useForm();
     const handleDelete = () => {
         if (confirm(`Czy na pewno chesz usunąć artykuł z id ${news.id}?`)) {
-            destroy(`/news/${news.id}`);
+            destroy(`/news/${news.id}`, { preserveScroll: true });
         }
     };
 

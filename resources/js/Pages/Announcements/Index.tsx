@@ -19,6 +19,7 @@ export default function Announcements({ auth, nextAvailable }: PageProps) {
                         className="justify-center items-center"
                         onClick={() =>
                             put("/announcements/next-as-current", {
+                                preserveScroll: true,
                                 onSuccess: () => {
                                     alert("Udało się!");
                                 },

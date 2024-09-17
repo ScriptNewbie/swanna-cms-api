@@ -1,8 +1,7 @@
 import { FilePostForm } from "@/Components/FilePostForm";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
-import { Head, useForm } from "@inertiajs/react";
-import { FormEvent, useState } from "react";
+import { Head } from "@inertiajs/react";
 import { File } from "./File";
 
 export default function FileUpload({ auth, files }: PageProps) {

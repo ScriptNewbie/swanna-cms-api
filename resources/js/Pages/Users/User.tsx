@@ -11,7 +11,7 @@ export function User({
     const { delete: destroy, patch } = useForm();
     const handleDelete = () => {
         if (confirm(`Czy na pewno chesz usunąć użytkownika z id ${user.id}?`)) {
-            destroy(`/users/${user.id}`);
+            destroy(`/users/${user.id}`, { preserveScroll: true });
         }
     };
 
@@ -21,7 +21,7 @@ export function User({
                 `Czy na pewno chesz uczynić użytkownika z id ${user.id} super adminem?`
             )
         ) {
-            patch(`/users/super-admin/${user.id}`);
+            patch(`/users/super-admin/${user.id}`, { preserveScroll: true });
         }
     };
 
@@ -31,7 +31,7 @@ export function User({
                 `Czy na pewno chesz uczynić użytkownika z id ${user.id} adminem?`
             )
         ) {
-            patch(`/users/admin/${user.id}`);
+            patch(`/users/admin/${user.id}`, { preserveScroll: true });
         }
     };
 
@@ -41,7 +41,7 @@ export function User({
                 `Czy na pewno chesz zdegradować użytkownika z id ${user.id} do zwykłego użytkownika?`
             )
         ) {
-            patch(`/users/demote/${user.id}`);
+            patch(`/users/demote/${user.id}`, { preserveScroll: true });
         }
     };
 

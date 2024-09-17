@@ -14,6 +14,7 @@ export default function Edit({ auth, news }: PageProps & { news: News }) {
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         put(`/news/${news.id}`, {
+            preserveScroll: true,
             onSuccess: () => reset(),
         });
     };

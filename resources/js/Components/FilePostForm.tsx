@@ -5,6 +5,7 @@ import { FormEvent } from "react";
 export function FilePostForm({ endpointUrl }: { endpointUrl: string }) {
     const { data, setData, post, errors, reset } = useForm({
         file: null as File | null,
+        preserveScroll: true,
     });
 
     const handleSubmit = (e: FormEvent) => {
