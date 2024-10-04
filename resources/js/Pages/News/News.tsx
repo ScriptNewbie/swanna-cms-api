@@ -1,3 +1,4 @@
+import { ActionsCard } from "@/Components/ActionsCard";
 import { useForm, Link } from "@inertiajs/react";
 
 export interface News {
@@ -17,30 +18,25 @@ export function News({ news }: { news: News }) {
     };
 
     return (
-        <div className="max-w-sm rounded overflow-hidden shadow-lg p-4 bg-white flex flex-col h-full">
-            <div className="flex-grow">
-                <div className="font-bold text-xl mb-2">
-                    {news.id} - {news.title}
-                </div>
-                <p className="text-gray-600 text-sm mb-2">
-                    {new Date(news.publicationDate).toLocaleDateString()}{" "}
-                    {news.author}
-                </p>
-            </div>
-            <div className="flex justify-end mt-4">
+        <ActionsCard
+            title={`${news.id} - ${news.title}`}
+            subtitle={`${new Date(news.publicationDate).toLocaleDateString()} ${
+                news.author
+            }`}
+            actions={[
                 <Link
                     href={`/news/${news.id}`}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded mr-2"
                 >
                     Edytuj
-                </Link>
+                </Link>,
                 <button
                     onClick={handleDelete}
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded"
                 >
                     Usuń
-                </button>
-            </div>
-        </div>
+                </button>,
+            ]}
+        />
     );
 }

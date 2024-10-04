@@ -1,3 +1,4 @@
+import { ActionsCard } from "@/Components/ActionsCard";
 import { User as UserType } from "@/types";
 import { useForm } from "@inertiajs/react";
 
@@ -46,18 +47,14 @@ export function User({
     };
 
     const role = `${user.admin}`;
+
     return (
-        <div className="max-w-md rounded overflow-hidden shadow-lg p-4 bg-white flex flex-col h-full">
-            <div className="flex-grow">
-                <div className="font-bold text-xl mb-2">
-                    {user.id} - {user.name}
-                </div>
-                <p className="text-gray-600 text-sm mb-2">
-                    {role in roleMap ? roleMap[role] : "Unknown role"} -{" "}
-                    {user.email}
-                </p>
-            </div>
-            <div className="flex justify-end mt-4 ">
+        <ActionsCard
+            title={`${user.id} - ${user.name}`}
+            subtitle={`${role in roleMap ? roleMap[role] : "Unknown role"} - ${
+                user.email
+            }`}
+            actions={
                 <div className="grid gap-1 grid-cols-2">
                     <button
                         disabled={disabled}
@@ -104,8 +101,8 @@ export function User({
                         Usuń
                     </button>
                 </div>
-            </div>
-        </div>
+            }
+        />
     );
 }
 

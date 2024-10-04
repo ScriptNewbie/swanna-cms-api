@@ -1,3 +1,4 @@
+import { ActionsCard } from "@/Components/ActionsCard";
 import { useForm } from "@inertiajs/react";
 
 export function File({ file }: { file: string }) {
@@ -9,8 +10,8 @@ export function File({ file }: { file: string }) {
     };
 
     return (
-        <div className="max-w-sm rounded overflow-hidden shadow-lg p-4 bg-white flex flex-col h-full">
-            <div className="flex-grow">
+        <ActionsCard
+            title={
                 <a
                     href={"/files/" + file}
                     target="_blank"
@@ -18,15 +19,15 @@ export function File({ file }: { file: string }) {
                 >
                     {file}
                 </a>
-            </div>
-            <div className="flex justify-end mt-4">
+            }
+            actions={
                 <button
                     onClick={handleDelete}
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded"
                 >
                     Usuń
                 </button>
-            </div>
-        </div>
+            }
+        />
     );
 }
