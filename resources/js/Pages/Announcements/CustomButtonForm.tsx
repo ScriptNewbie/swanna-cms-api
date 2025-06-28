@@ -68,11 +68,11 @@ export default function CustomButtonForm({ settings }: CustomButtonFormProps) {
                     <InputLabel htmlFor="url" value="URL" />
                     <TextInput
                         id="url"
-                        type="url"
+                        type="text"
                         className="mt-1 block w-full"
                         value={data.url}
                         onChange={(e) => setData("url", e.target.value)}
-                        placeholder="https://swanna.net.pl/pdf/koleda2025.pdf"
+                        placeholder="/pdf/koleda2025.pdf"
                     />
                     <InputError message={errors.url} className="mt-2" />
                 </div>
