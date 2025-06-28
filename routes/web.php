@@ -50,6 +50,7 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::post('/announcements', [AnnouncementsController::class, 'store'])->name('announcements.upload');
     Route::post('/announcements/next', [AnnouncementsController::class, 'storeNext'])->name('announcements.upload.next');
     Route::put('/announcements/next-as-current', [AnnouncementsController::class, 'nextAsCurrent'])->name('announcements.next.current');
+    Route::put('/announcements/custom-button', [AnnouncementsController::class, 'updateCustomButton'])->name('announcements.custom-button.update');
 });
 
 Route::middleware(['auth', SuperAdminMiddleware::class])->group(function () {

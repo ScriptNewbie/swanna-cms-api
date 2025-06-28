@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Models\CustomButtonSetting;
 
 class AnnouncementsController extends Controller
 {
@@ -24,7 +25,12 @@ class AnnouncementsController extends Controller
 
     public function index()
     {
-        return Inertia::render('Announcements/Index', ["nextAvailable" => file_exists($this->nextFile)]);
+        $customButtonSettings = CustomButtonSetting::getSettings();
+
+        return Inertia::render('Announcements/Index', [
+            "nextAvailable" => file_exists($this->nextFile),
+            "customButtonSettings" => $customButtonSettings
+        ]);
     }
 
     public function store(Request $request)
@@ -63,5 +69,19 @@ class AnnouncementsController extends Controller
         if (file_exists($this->currentFile)) {
             rename($this->currentFile, $historyFile);
         }
+    }
+
+    public function updateCustomButton(Request $request)
+    {
+        $validated = $request->validate([
+            'enabled' => 'required|boolean',
+            'name' => 'required|string|max:255',
+            'url' => 'required|string|max:500',
+        ]);
+
+        $settings = CustomButtonSetting::getSettings();
+        $settings->update($validated);
+
+        return redirect()->back()->with('success', 'Custom button settings updated successfully!');
     }
 }

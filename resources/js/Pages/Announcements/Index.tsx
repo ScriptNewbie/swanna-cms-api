@@ -3,8 +3,18 @@ import { PageProps } from "@/types";
 import { FilePostForm } from "../../Components/FilePostForm";
 import { Head, useForm } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
+import CustomButtonForm, { CustomButtonSettings } from "./CustomButtonForm";
 
-export default function Announcements({ auth, nextAvailable }: PageProps) {
+interface AnnouncementsProps extends PageProps {
+    nextAvailable: boolean;
+    customButtonSettings: CustomButtonSettings;
+}
+
+export default function Announcements({
+    auth,
+    nextAvailable,
+    customButtonSettings,
+}: AnnouncementsProps) {
     const { put } = useForm();
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -35,6 +45,8 @@ export default function Announcements({ auth, nextAvailable }: PageProps) {
                         Ogłoszenia z następnego tygodnia jako aktualne!
                     </PrimaryButton>
                 )}
+
+                <CustomButtonForm settings={customButtonSettings} />
             </div>
         </AuthenticatedLayout>
     );
