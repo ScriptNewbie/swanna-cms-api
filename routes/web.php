@@ -6,6 +6,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\FilesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AnnouncementsController;
+use App\Http\Controllers\LegacyViewController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\SuperAdminMiddleware;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,8 @@ Route::get('/', function () {
     }
 });
 
-
+// Legacy view for old browsers
+Route::get('/old', [LegacyViewController::class, 'index'])->name('legacy');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
