@@ -4,40 +4,49 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FilesController extends Controller
 {
-    private $fileDirectory;
-
-    public function __construct()
-    {
-        $this->fileDirectory = public_path('../../private_html/files');
-    }
+    private $disk = 'files';
 
     public function index()
     {
-        $files = [];
-        if (file_exists($this->fileDirectory)) {
-            $files = scandir($this->fileDirectory);
-            $files = array_values(array_filter($files, function ($file) {
-                return !str_starts_with($file, ".");
-            }));
-        }
-        return Inertia::render('Files/Index', ["files" => $files]);
+        $files = Storage::disk($this->disk)->files();
+        // Get just the filenames without paths
+        $files = array_map(function ($file) {
+            return basename($file);
+        }, $files);
+
+        return Inertia::render('Files/Index', ["files" => array_values($files)]);
     }
 
     public function destroy($name)
     {
-        $file = $this->fileDirectory . "/" . $name;
-        if (file_exists($file)) {
-            unlink($file);
-        }
+        Storage::disk($this->disk)->delete($name);
         return redirect()->back()->with('success', 'File deleted successfully!');
     }
 
     public function store(Request $request)
     {
-        $request->file('file')->move($this->fileDirectory, $request->file('file')->getClientOriginalName());
+        $request->validate([
+            'file' => 'required|file'
+        ]);
+
+        $file = $request->file('file');
+        $filename = $file->getClientOriginalName();
+
+        Storage::disk($this->disk)->putFileAs('', $file, $filename);
+
         return redirect()->back()->with('success', 'File uploaded successfully!');
+    }
+
+    public function show($name)
+    {
+        if (!Storage::disk($this->disk)->exists($name)) {
+            abort(404);
+        }
+
+        return response()->file(Storage::disk($this->disk)->path($name));
     }
 }

@@ -5,70 +5,95 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use App\Models\CustomButtonSetting;
 
 class AnnouncementsController extends Controller
 {
-
-    private $uploadDirectory;
-    private $historyDirectory;
-    private $currentFile;
-    private $nextFile;
-
-    public function __construct()
-    {
-        $this->uploadDirectory = public_path('../../private_html/ogloszenia');
-        $this->historyDirectory = $this->uploadDirectory . '/historia';
-        $this->currentFile = $this->uploadDirectory . '/ogloszenia.pdf';
-        $this->nextFile = $this->uploadDirectory . '/next.pdf';
-    }
+    private $disk = 'announcements';
+    private $currentFile = 'ogloszenia.pdf';
+    private $nextFile = 'next.pdf';
+    private $historyDirectory = 'historia';
 
     public function index()
     {
         $customButtonSettings = CustomButtonSetting::getSettings();
 
         return Inertia::render('Announcements/Index', [
-            "nextAvailable" => file_exists($this->nextFile),
+            "nextAvailable" => Storage::disk($this->disk)->exists($this->nextFile),
             "customButtonSettings" => $customButtonSettings
         ]);
     }
 
     public function store(Request $request)
     {
+        $request->validate([
+            'file' => 'required|file|mimes:pdf'
+        ]);
+
         $this->archiveCurrent();
-        $request->file('file')->move($this->uploadDirectory, "ogloszenia.pdf");
+
+        $file = $request->file('file');
+        Storage::disk($this->disk)->putFileAs('', $file, $this->currentFile);
+
         return redirect()->back()->with('success', 'File uploaded and managed successfully!');
     }
 
-
     public function storeNext(Request $request)
     {
-        $request->file('file')->move(public_path('../../private_html/ogloszenia'), "next.pdf");
+        $request->validate([
+            'file' => 'required|file|mimes:pdf'
+        ]);
+
+        $file = $request->file('file');
+        Storage::disk($this->disk)->putFileAs('', $file, $this->nextFile);
+
         return redirect()->back()->with('success', 'File uploaded successfully!');
     }
 
     public function nextAsCurrent()
     {
-        if (!file_exists($this->nextFile)) {
+        if (!Storage::disk($this->disk)->exists($this->nextFile)) {
             return redirect()->back()->withErrors(["next" => "Nie ma jeszcze ogłoszeń z następnego tygodnia!"]);
         }
+
         $this->archiveCurrent();
-        rename($this->nextFile, $this->currentFile);
+
+        // Move next file to current
+        Storage::disk($this->disk)->move($this->nextFile, $this->currentFile);
+
         return redirect()->back()->with('success', 'Files managed successfully!');
     }
 
     private function archiveCurrent()
     {
+        if (!Storage::disk($this->disk)->exists($this->currentFile)) {
+            return;
+        }
+
         $randomString = Str::random(5);
-        $historyFile = $this->historyDirectory . '/' . date("d-m-Y") . '-' . $randomString . '.pdf';
+        $historyFilename = date("d-m-Y") . '-' . $randomString . '.pdf';
+        $historyPath = $this->historyDirectory . '/' . $historyFilename;
 
-        if (!file_exists($this->historyDirectory)) {
-            mkdir($this->historyDirectory, 0755, true);
+        // Move current file to history
+        Storage::disk($this->disk)->move($this->currentFile, $historyPath);
+    }
+
+    public function show($filename)
+    {
+        // Only allow specific filenames
+        if (!in_array($filename, [$this->currentFile, $this->nextFile])) {
+            abort(404);
         }
 
-        if (file_exists($this->currentFile)) {
-            rename($this->currentFile, $historyFile);
+        if (!Storage::disk($this->disk)->exists($filename)) {
+            abort(404);
         }
+
+        return response()->file(
+            Storage::disk($this->disk)->path($filename),
+            ['Content-Type' => 'application/pdf']
+        );
     }
 
     public function updateCustomButton(Request $request)

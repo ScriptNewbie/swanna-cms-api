@@ -53,6 +53,9 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::put('/announcements/custom-button', [AnnouncementsController::class, 'updateCustomButton'])->name('announcements.custom-button.update');
 });
 
+Route::get('/files/{name}', [FilesController::class, 'show'])->name('files.show');
+Route::get('/ogloszenia/{filename}', [AnnouncementsController::class, 'show'])->name('announcements.show');
+
 Route::middleware(['auth', SuperAdminMiddleware::class])->group(function () {
     Route::get('/users', [UsersController::class, 'index'])->name('users');
     Route::delete('/users/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
