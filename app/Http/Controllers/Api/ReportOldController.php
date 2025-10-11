@@ -34,7 +34,6 @@ class ReportOldController extends Controller
         if ($now > $next) {
 
             Mail::raw('Zaaktualizuj ogłoszenia na stronie!', function ($message) {
-                $message->from('admin@swanna.net.pl', 'Admin');
                 $message->to('marcin.konopka98@protonmail.com');
                 $message->subject('Zaaktualizuj ogłoszenia na stronie!');
             });
