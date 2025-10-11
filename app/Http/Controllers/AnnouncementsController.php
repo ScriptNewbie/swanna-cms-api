@@ -92,7 +92,12 @@ class AnnouncementsController extends Controller
 
         return response()->file(
             Storage::disk($this->disk)->path($filename),
-            ['Content-Type' => 'application/pdf']
+            [
+                'Content-Type' => 'application/pdf',
+                'Cache-Control' => 'no-cache, no-store, must-revalidate, max-age=0',
+                'Pragma' => 'no-cache',
+                'Expires' => '0'
+            ]
         );
     }
 
