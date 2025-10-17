@@ -7,6 +7,7 @@ use App\Http\Controllers\FilesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AnnouncementsController;
 use App\Http\Controllers\LegacyViewController;
+use App\Http\Controllers\AppConfigController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\SuperAdminMiddleware;
 use Illuminate\Support\Facades\Auth;
@@ -61,6 +62,9 @@ Route::middleware(['auth', SuperAdminMiddleware::class])->group(function () {
     Route::patch('/users/super-admin/{id}', [UsersController::class, 'makeSuperAdmin'])->name('users.makeSuperAdmin');
     Route::patch('/users/admin/{id}', [UsersController::class, 'makeAdmin'])->name('users.makeAdmin');
     Route::patch('/users/demote/{id}', [UsersController::class, 'makeUser'])->name('users.demote');
+
+    Route::get('/app-config', [AppConfigController::class, 'index'])->name('app-config');
+    Route::put('/app-config', [AppConfigController::class, 'update'])->name('app-config.update');
 });
 
 require __DIR__ . '/auth.php';

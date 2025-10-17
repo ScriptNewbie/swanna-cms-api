@@ -60,12 +60,22 @@ export default function Authenticated({
                                     </>
                                 )}
                                 {user.admin === 10 && (
-                                    <NavLink
-                                        href={route("users")}
-                                        active={route().current("users")}
-                                    >
-                                        Użytkownicy
-                                    </NavLink>
+                                    <>
+                                        <NavLink
+                                            href={route("users")}
+                                            active={route().current("users")}
+                                        >
+                                            Użytkownicy
+                                        </NavLink>
+                                        <NavLink
+                                            href={route("app-config")}
+                                            active={route().current(
+                                                "app-config"
+                                            )}
+                                        >
+                                            Konfiguracja
+                                        </NavLink>
+                                    </>
                                 )}
                             </div>
                         </div>
@@ -196,12 +206,20 @@ export default function Authenticated({
                             </>
                         )}
                         {user.admin === 10 && (
-                            <ResponsiveNavLink
-                                href={route("users")}
-                                active={route().current("users")}
-                            >
-                                Użytkownicy
-                            </ResponsiveNavLink>
+                            <>
+                                <ResponsiveNavLink
+                                    href={route("users")}
+                                    active={route().current("users")}
+                                >
+                                    Użytkownicy
+                                </ResponsiveNavLink>
+                                <ResponsiveNavLink
+                                    href={route("app-config")}
+                                    active={route().current("app-config")}
+                                >
+                                    Konfiguracja
+                                </ResponsiveNavLink>
+                            </>
                         )}
                     </div>
 
