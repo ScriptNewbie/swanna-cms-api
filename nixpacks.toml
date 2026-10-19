@@ -1,5 +1,25 @@
+# Patched Nixpacks Ubuntu base. Replaces ubuntu-1745885067 (April 2025).
+buildImage = "ghcr.io/railwayapp/nixpacks:ubuntu-1788221300"
+
+[variables]
+# Nixpacks 1.41 defaults to EOL Node.js 18. 22 is the oldest supported LTS.
+NIXPACKS_NODE_VERSION = "22"
+
 [phases.setup]
-nixPkgs = ["...", "python311Packages.supervisor"]
+# nixos-26.05 at 2026-10-18: PHP 8.4.26 and Node.js 22.23.3.
+# composer.lock requires PHP >= 8.4.1 (symfony/clock and others). The provider
+# would install PHP 8.2 because composer.json contains "8.2", and nodejs_18
+# no longer exists in this nixpkgs.
+nixpkgsArchive = "8ce73368d1efd4d657e9064d29b144a52046b4e8"
+nixPkgs = [
+    "(php84.withExtensions (pe: pe.enabled ++ []))",
+    "nginx",
+    "libmysqlclient",
+    "php84Packages.composer",
+    "nodejs_22",
+    "npm-9_x",
+    "python311Packages.supervisor",
+]
 
 [phases.build]
 cmds = [
