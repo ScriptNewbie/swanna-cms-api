@@ -1,5 +1,8 @@
-# Patched Nixpacks Ubuntu base. Replaces ubuntu-1745885067 (April 2025).
-buildImage = "ghcr.io/railwayapp/nixpacks:ubuntu-1788221300"
+# Patched Nixpacks Ubuntu base. Replaces ubuntu-1788221300 (2026-09-01),
+# which still shipped openssl 3.0.13-0ubuntu3.15 (CVE-2026-84782) and older
+# curl, libexpat, glibc, perl, and sudo packages. Same digest as the floating
+# ubuntu tag on 2026-10-20.
+buildImage = "ghcr.io/railwayapp/nixpacks:ubuntu-1792454791"
 
 [variables]
 # Nixpacks 1.41 defaults to EOL Node.js 18. 22 is the oldest supported LTS.
