@@ -28,6 +28,16 @@ nixPkgs = [
     "npm-9_x",
     "python311Packages.supervisor",
 ]
+# ubuntu-1792454791 (2026-10-20) still installs libbrotli1 1.1.0-2build2
+# (CVE-2026-111497). Nix brotli 1.2.1 does not replace that OS library.
+# The same fixed version is also in noble-updates, and apt then prefers
+# archive.ubuntu.com, so this transaction uses only the noble-security
+# pocket on security.ubuntu.com. The temporary apt config is deleted.
+# There is no runImage, so this command is part of the runtime image.
+cmds = [
+    "...",
+    '''tmp=$(mktemp -d) && chmod 755 "$tmp" && mkdir -p "$tmp/parts" "$tmp/lists" && printf '%s\n' 'Types: deb' 'URIs: http://security.ubuntu.com/ubuntu/' 'Suites: noble-security' 'Components: main' 'Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg' > "$tmp/parts/security.sources" && : > "$tmp/sources.list" && DEBIAN_FRONTEND=noninteractive apt-get -o Dir::Etc::sourcelist="$tmp/sources.list" -o Dir::Etc::sourceparts="$tmp/parts" -o Dir::State::lists="$tmp/lists" update && DEBIAN_FRONTEND=noninteractive apt-get -o Dir::Etc::sourcelist="$tmp/sources.list" -o Dir::Etc::sourceparts="$tmp/parts" -o Dir::State::lists="$tmp/lists" install -y --only-upgrade libbrotli1=1.1.0-2ubuntu0.1 && rm -rf "$tmp"''',
+]
 
 [phases.build]
 cmds = [
